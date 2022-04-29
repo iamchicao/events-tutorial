@@ -1,0 +1,17 @@
+.preview {
+  border: 1px darkgray solid;
+  padding: 10px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  text-align: left;
+}
+
+.wrapper button {
+  background: none;
+  border: 1px black solid;
+  margin-top: 10px;
+}
