@@ -23,10 +23,16 @@ export default function FileNamer() {
           <input
             autoComplete="off"
             name="name"
+            onBlur={() => setAlert(false)}
             onChange={(event) => setName(event.target.value)}
+            onFocus={() => setAlert(true)}
           />
         </label>
-        {alert && <div>Forbidden Character: *</div>}
+        {alert && <div>
+          <span role="img" aria-label="allowed">✅</span> Alphanumeric Characters
+          <br />
+          <span role="img" aria-label="not allowed">⛔</span>
+        </div>}
         <div>
           <button onClick={validate}>Save</button>
         </div>
