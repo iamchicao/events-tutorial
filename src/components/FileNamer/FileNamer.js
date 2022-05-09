@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./FileNamer.css";
 
 export default function FileNamer() {
   const [name, setName] = useState("");
-  const [alert, setAlert] = useState("");
+  const [alert, setAlert] = useState(false);
+
+  useEffect(() => {
+    const handleWindowClick = () => setAlert(false)
+    if(alert) {
+      window.addEventListener('click', handleWindowClick);
+    } else {
+      window.removeEventListener('click', handleWindowClick)
+    }
+    return () => window.removeEventListener('click', handleWindowClick);
+  }, [alert, setAlert]);
+
   const validate = (event) => {
     if (/\*/.test(name)) {
       event.preventDefault();
@@ -25,14 +36,24 @@ export default function FileNamer() {
             name="name"
             onBlur={() => setAlert(false)}
             onChange={(event) => setName(event.target.value)}
-            onFocus={() => setAlert(true)}
           />
         </label>
-        {alert && <div>
-          <span role="img" aria-label="allowed">✅</span> Alphanumeric Characters
-          <br />
-          <span role="img" aria-label="not allowed">⛔</span>
-        </div>}
+        <div className="information-wrapper">
+          <button
+            className="information"
+            onClick={() => setAlert(true)}
+            type="button"
+          >
+            more infomation
+          </button>
+          {alert &&
+            <div className="popup">
+              <span role="img" aria-label="allowed">✅</span> Alphanumeric Characters
+              <br />
+              <span role="img" aria-label="not allowed">⛔</span> *
+            </div>
+          }
+        </div>
         <div>
           <button onClick={validate}>Save</button>
         </div>
